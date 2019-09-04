@@ -1,0 +1,13 @@
+<odoo> 
+      <data>
+            <report
+                string="Reporte de ruta LXTrack"
+                id="action_imp_report"
+                model="pos.order"
+                name="reporte_lxt.report_lxt"
+                file="reporte_lxt.report_lxt"
+                report_type="qweb-pdf"
+                print_report_name="'Reporte - %s' % object.name"
+            />
+      </data>
+</odoo>

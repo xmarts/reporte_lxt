@@ -1,0 +1,37 @@
+<odoo>
+  <data>
+
+    <record id="action_wizard_report_stock" model="ir.ui.view">
+      <field name="name">Generar reporte LXTrack</field>
+      <field name="model">wizard.reporte.lxt</field>
+      <field name="arch" type="xml">
+      <form>
+        <header></header>
+        <sheet>
+          <group>
+            <field name="route_report" string="Selecciona la ruta" />
+            <field name="route_select" string="Ruta seleccionada" invisible="1"/>
+          </group>
+        </sheet>
+        <footer>
+          <button string="Generar" type="object" name="generate_report" class="btn-primary"/>
+          <button special="cancel" string="Cancelar"/>
+        </footer>
+      </form>
+      </field>
+    </record>
+
+    <record id="action_view_wizard_reporte" model="ir.actions.act_window">
+      <field name="name">Generar reporte LXTrack</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">wizard.reporte.lxt</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">form</field>
+      <field name="view_id" ref="action_wizard_report_stock"/>
+      <field name="target">new</field>
+    </record>
+
+    <menuitem id="reporte_lxt" name="Reporte LXTrack" parent="point_of_sale.menu_point_rep" sequence="100" action="action_view_wizard_reporte" />
+
+  </data>
+</odoo>

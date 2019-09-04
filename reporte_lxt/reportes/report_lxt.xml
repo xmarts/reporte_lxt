@@ -1,0 +1,146 @@
+<odoo>
+	<template id="report_lxt">
+		<t t-call="web.html_container">
+			<t t-call="web.external_layout">
+				<t>
+					<div class="page">
+						<div class="row">
+							<div class="col-12 text-right">
+								<p>
+									<b>Fecha y hora de impresión:</b>
+									<span t-esc="time.strftime('%Y-%m-%d %H:%M:%S')"/>.
+								</p>
+								<p>
+									<b>Usuario:</b>
+									<t t-set="user_name" t-value="user.name"/>
+									<span t-esc="user_name" />.
+								</p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-12 text-center">
+								<b>Informe de ventas al día: 
+									<span t-esc="time.strftime('%d/%m/%y')"/> </b>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-6">
+								Nombre de ruta
+							</div>
+						</div>
+						<br/>
+						<div class="row">
+							<div class="col-6 text-center">
+								<b>Clientes del Día</b>
+							</div>
+							<div class="col-6 text-center">
+								<b>NOTA</b>
+							</div>
+						</div>
+						<br/>
+						<table class="table table-condensed" style="font-size:12px !important;">
+			                <thead>
+			                  <tr>
+			                    <th>No. Cliente</th>
+			                    <th>Nombre</th>
+			                    <th>Folio</th>
+			                    <th>Vta Unids</th>
+			                    <th>Venta</th>
+			                    <th>Descto</th>
+			                    <th>Venta Cntdo</th>
+			                    <th>Saldo Vend.</th>
+			                    <th>HH</th>
+			                    <th>Hora atención</th>
+			                  </tr>
+			                </thead>
+			                <tbody class="invoice_tbody">
+			                	<t t-foreach="docs" t-as="o">
+			                		<tr>
+			                			<td>
+			                				<span t-field="o.partner_id.id" />
+			                			</td>
+			                			<td>
+			                				<span t-field="o.partner_id.name" />
+			                			</td>
+			                			<td>
+			                				<span>200</span>
+			                			</td>
+			                			<td>
+			                				<t t-set="cantvend" t-value="0" />
+			                				<t t-foreach="o.lines" t-as="lin">
+			                					<t t-set="cantvend" t-value="cantvend + lin.qty" />
+			                				</t>
+			                				<span t-esc="'%.2f'% cantvend" />
+			                			</td>
+			                			<td>
+			                				<span t-esc="'%.2f'% o.amount_total" />
+			                			</td>
+			                			<td>
+			                				<span>0</span>
+			                			</td>
+			                			<td>
+			                				<span t-esc="'%.2f'% o.amount_total" />
+			                			</td>
+			                			<td>
+			                				<span>0</span>
+			                			</td>
+			                			<td>
+			                				<span>SCANNER</span>
+			                			</td>
+			                			<td>
+			                				<span t-field="o.date_order" t-options='{"format": "hh:mm:ss"}' />
+			                			</td>
+			                		</tr>
+			                 	</t>
+			                 	<tr>
+			                 		<td colspan="2">Total clientes del dia:</td>
+			                 		<td>
+			                 			<t t-set="cantcli" t-value="0"/>
+					            		<t t-foreach="docs" t-as="o">
+					            			<t t-set="cantcli" t-value="cantcli + 1"/>
+					            		</t>
+					            		<b t-esc="cantcli" />
+			                 		</td>
+			                 		<td>
+			                 			<t t-set="cantunid" t-value="0"/>
+				            			<t t-foreach="docs" t-as="o">
+				            				<t t-set="cantvend" t-value="0" />
+				            				<t t-foreach="o.lines" t-as="lin">
+				            					<t t-set="cantvend" t-value="cantvend + lin.qty" />
+				            				</t>
+				            				<t t-set="cantunid" t-value="cantunid + cantvend" />
+				            			</t>
+				            			<b t-esc="'%.2f'% cantunid" />
+			                 		</td>
+			                 		<td>
+			                 			<t t-set="tot" t-value="0" />
+			                 			<t t-foreach="docs" t-as="o">
+			                 				<t t-set="tot" t-value="tot + o.amount_total" />
+			                 			</t>
+			                 			<b t-esc="'%.2f'% tot" />
+			                 		</td>
+			                 		<td>
+			                 			<b>0.00</b>
+			                 		</td>
+			                 		<td>
+			                 			<t t-set="tot" t-value="0" />
+			                 			<t t-foreach="docs" t-as="o">
+			                 				<t t-set="tot" t-value="tot + o.amount_total" />
+			                 			</t>
+			                 			<b t-esc="'%.2f'% tot" />
+			                 		</td>
+			                 		<td>
+			                 			<b>0.00</b>
+			                 		</td>
+			                 		<td></td>
+			                 		<td></td>
+			                 	</tr>
+			                </tbody>
+			            </table>
+					</div>
+				</t>
+			</t>
+		</t>
+	</template>
+
+</odoo>
